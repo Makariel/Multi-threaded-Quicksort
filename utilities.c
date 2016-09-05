@@ -36,22 +36,27 @@ void read_file(char *fn, size_t buf_size) {
 	  
 	  // Allocate memory according to the reduction variable
 	  line = malloc(buf_length - reduction);
-	  if(line == NULL) malloc_fail();
+	  if(line == NULL) malloc_fail("Utilies.c: line");
           
 	  // Copy from buffer to our variable "line", which is to used by strsep below
-	  strncpy(line, buffer, buf_length - reduction);
-	   
-         	  	  
-	
+	  strncpy(line, buffer, buf_length - reduction);	   
+	  
+	  // Once has to copy the content of line and pass this pointer to strsep in order to free the original variable
+	  char *line_copy = line;
+	  
 	  // Split the line read according to critera "delim" with the use of strsep
-	while ((token = strsep(&line, delimiter)) != NULL) {
-	      list_add(token);
+	while ((token = strsep(&line_copy, delimiter)) != NULL) {
+	       list_add(token);
         }
         
-         free(line);
+        // Free memory associated with allocation
+        free(line);
    }
-   
-     list_display();
+       // Display the list of words
+       list_display();
+       
+       // Free memory
+       list_free();
 	                                
 fclose(f); 
 

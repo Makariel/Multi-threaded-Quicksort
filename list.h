@@ -12,4 +12,4 @@ typedef struct Node {
 void list_add(char *word);
 void list_display();
 void list_free();
-void malloc_fail();
+void malloc_fail(char *source);
