@@ -6,8 +6,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <assert.h>
-#include "list.h"
 
 void error (char *msg);
-void read_file(char *fn, size_t buf_size);
+struct Node *read_file(char *fn, size_t buf_size, struct Node **n);
 

@@ -1,5 +1,5 @@
 #include "utilities.h"
-
+#include "list.h"
 
 // Output error, and terminate the program
 void error(char *msg) {
@@ -9,7 +9,7 @@ void error(char *msg) {
 
 // Read file into memory
 
-void read_file(char *fn, size_t buf_size) {
+struct Node *read_file(char *fn, size_t buf_size, struct Node **n) {
   
      FILE *f;
      char *token;
@@ -22,11 +22,9 @@ void read_file(char *fn, size_t buf_size) {
        error("ERROR: [Opening file]");
     }
       
-      
       while (fgets(buffer, buf_size, f) != NULL) {    
 	
 	  int buf_length = strlen(buffer);
-	  
 	  int reduction = 0;
 	  
 	  // If there exists a newline at the end of the string, one should remove it by ignoring it  
@@ -46,18 +44,19 @@ void read_file(char *fn, size_t buf_size) {
 	  
 	  // Split the line read according to critera "delim" with the use of strsep
 	while ((token = strsep(&line_copy, delimiter)) != NULL) {
-	       list_add(token);
+ 	       list_add(token, n);
         }
         
         // Free memory associated with allocation
-        free(line);
+         free(line);
    }
-       // Display the list of words
-       list_display();
-       
-       // Free memory
-       list_free();
-	                                
-fclose(f); 
-
+                    
+     fclose(f); 
+     
+//          char memory[(sizeof(struct Node))];
+//           Node *results = malloc(sizeof(struct Node));
+//          results = (*n) ;
+     
+     
+     return (*n);
 }
